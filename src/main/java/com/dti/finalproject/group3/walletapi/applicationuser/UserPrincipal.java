@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.dti.finalproject.group3.walletapi.customer.Customer;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +25,7 @@ public class UserPrincipal implements UserDetails {
     private String username;
     private String email;
     private String password;
-    //TODO add customer
+    private Customer customer;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -33,7 +35,7 @@ public class UserPrincipal implements UserDetails {
                 .username(applicationUser.getUsername())
                 .email(applicationUser.getEmail())
                 .password(applicationUser.getPassword())
-
+                .customer(applicationUser.getCustomer())
                 .build();
     }
 

@@ -2,12 +2,16 @@ package com.dti.finalproject.group3.walletapi.applicationuser;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.dti.finalproject.group3.walletapi.customer.Customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,8 +37,9 @@ public class ApplicationUser {
 
     @Column(unique = true)
     private String username;
-    
+
     private String password;
 
-    //TODO add customer
+    @OneToOne(cascade = CascadeType.ALL)
+    private Customer customer;
 }
