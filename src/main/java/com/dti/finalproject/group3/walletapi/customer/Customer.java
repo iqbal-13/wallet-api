@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUser;
+import com.dti.finalproject.group3.walletapi.wallet.Wallet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,4 +42,8 @@ public class Customer {
     @JsonIgnore
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private ApplicationUser applicationUser;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Wallet wallet;
 }

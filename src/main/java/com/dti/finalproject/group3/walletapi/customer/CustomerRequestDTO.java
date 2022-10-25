@@ -30,6 +30,7 @@ public class CustomerRequestDTO {
                        .name(this.name)
                        .nik(this.nik)
                        .dateOfBirth(this.dateOfBirth)
-                       .applicationUser(applicationUser).build();
+                       .applicationUser(applicationUser)
+                       .build();
     }
 }
