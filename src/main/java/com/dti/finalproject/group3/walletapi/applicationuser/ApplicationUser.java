@@ -31,8 +31,6 @@ public class ApplicationUser {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String name;
-
     private String email;
 
     @Column(unique = true)

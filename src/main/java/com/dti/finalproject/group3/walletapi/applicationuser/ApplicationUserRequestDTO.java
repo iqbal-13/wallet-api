@@ -17,7 +17,6 @@ import lombok.Setter;
 @Builder
 public class ApplicationUserRequestDTO {
     private UUID id;
-    private String name;
     private String email;
     private String username;
     private String password;
@@ -28,7 +27,6 @@ public class ApplicationUserRequestDTO {
 
         return ApplicationUser.builder()
                     .id(this.id)
-                    .name(this.name)
                     .email(this.email)
                     .username(this.username)
                     .password(encryptedPassword)
