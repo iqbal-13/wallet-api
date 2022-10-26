@@ -3,6 +3,7 @@ package com.dti.finalproject.group3.walletapi.customer;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class Customer {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private Long nik;
 
     @JsonFormat(pattern = "dd-MM-yyyy")

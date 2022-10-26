@@ -1,5 +1,6 @@
-package com.dti.finalproject.group3.walletapi.wallet;
+package com.dti.finalproject.group3.walletapi.transaction;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,16 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Min;
 
-import com.dti.finalproject.group3.walletapi.customer.Customer;
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.dti.finalproject.group3.walletapi.wallettransaction.WalletTransaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,25 +24,21 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@EqualsAndHashCode
-public class Wallet {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Min(100000)
-    private Long balance;
+    private String description;
+    private Long amount;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customer customer;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
-    private List<WalletTransaction> walletTransactions;
-
-    //TODO add wallet tag?
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
+    private List<WalletTransaction> walletsTransaction;
+    
+    @CreationTimestamp
+    private Timestamp createdAt;
 }

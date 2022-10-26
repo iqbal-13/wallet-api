@@ -42,4 +42,13 @@ public class WalletService {
 
         return optionalWallet.get();
     }
+
+    public Wallet findById(Long id) {
+        Optional<Wallet> optionalWallet = this.walletRepository.findById(id);
+        if (optionalWallet.isEmpty()) {
+            throw new WalletNotFoundException();
+        }
+
+        return optionalWallet.get();
+    }
 }
