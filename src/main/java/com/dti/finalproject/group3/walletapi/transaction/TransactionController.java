@@ -4,6 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,25 +38,33 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions")
-    public ResponseEntity<List<TransactionResponseDTO>> getAll(@RequestParam(value = "minAmount", defaultValue = "0", required = false) Long minAmount,
+    public ResponseEntity<Page<TransactionResponseDTO>> getAll(@RequestParam(value = "minAmount", defaultValue = "0", required = false) Long minAmount,
                                                     @RequestParam(value = "maxAmount", defaultValue = "999999999999", required = false) Long maxAmount,
                                                     @RequestParam(value = "fromDate", defaultValue = "01-01-0001", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fromDate,
-                                                    @RequestParam(value = "toDate", defaultValue = "31-12-9999", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate toDate
-                                                    // @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
-                                                    // @RequestParam(value = "orderBy", defaultValue = "asc") String orderBy
-                                                    ) {
-        // Sort sort = Sort.by(sortBy);
-        // if (orderBy.equals("desc")) {
-        //     sort = Sort.by(Direction.DESC, sortBy);
-        // }
+                                                    @RequestParam(value = "toDate", defaultValue = "31-12-9999", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate toDate,
+                                                    @RequestParam(value = "sortBy", defaultValue = "created_at") String sortBy,
+                                                    @RequestParam(value = "orderBy", defaultValue = "desc") String orderBy,
+                                                    @RequestParam(value = "page", defaultValue = "0") int page,
+                                                    @RequestParam(value = "size", defaultValue = "5") int size) {
+        Sort sort = Sort.by(sortBy);
+        if (orderBy.equals("asc")) {
+            sort = Sort.by(Direction.ASC, sortBy);
+        }
 
-        List<Transaction> transactions = this.transactionService.getAllTransactionFromCustomer(minAmount, maxAmount, fromDate, toDate);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Transaction> transactions = this.transactionService.getAllTransactionFromCustomer(minAmount, maxAmount, fromDate, toDate, pageable);
         List<TransactionResponseDTO> transactionResponseDTOs = new ArrayList<>();
         for (Transaction transaction : transactions) {
             TransactionResponseDTO transactionResponseDTO = transaction.convertToDTO();
             transactionResponseDTOs.add(transactionResponseDTO);
         }
 
-        return ResponseEntity.ok().body(transactionResponseDTOs);
+        int start = (int)pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), transactionResponseDTOs.size());
+        Page<TransactionResponseDTO> pageOfTransactionResponseDTOs = new PageImpl<>(
+            transactionResponseDTOs.subList(start, end), pageable, transactionResponseDTOs.size());
+
+        return ResponseEntity.ok().body(pageOfTransactionResponseDTOs);
     }
 }
