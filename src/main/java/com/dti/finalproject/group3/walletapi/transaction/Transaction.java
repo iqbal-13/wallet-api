@@ -1,19 +1,16 @@
 package com.dti.finalproject.group3.walletapi.transaction;
 
 import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.dti.finalproject.group3.walletapi.wallettransaction.WalletTransaction;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dti.finalproject.group3.walletapi.wallet.Wallet;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,10 +32,23 @@ public class Transaction {
     private String description;
     private Long amount;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
-    private List<WalletTransaction> walletsTransaction;
+    @OneToOne
+    private Wallet sourceWallet;
+
+    @OneToOne
+    private Wallet destinationWallet;
     
     @CreationTimestamp
     private Timestamp createdAt;
+
+    public TransactionResponseDTO convertToDTO() {
+        return TransactionResponseDTO.builder()
+                                     .id(this.id)
+                                     .description(this.description)
+                                     .amount(this.amount)
+                                     .sourceWalletId(this.sourceWallet.getId())
+                                     .destinationWalletId(this.destinationWallet.getId())
+                                     .createdAt(this.createdAt)
+                                     .build();
+    }
 }

@@ -1,18 +1,14 @@
 package com.dti.finalproject.group3.walletapi.wallet;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 
 import com.dti.finalproject.group3.walletapi.customer.Customer;
-import com.dti.finalproject.group3.walletapi.wallettransaction.WalletTransaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -41,9 +37,9 @@ public class Wallet {
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
-    private List<WalletTransaction> walletTransactions;
-
     //TODO add wallet tag?
+
+    public WalletResponseDTO convertToDTO() {
+        return WalletResponseDTO.builder().id(this.id).build();
+    }
 }
