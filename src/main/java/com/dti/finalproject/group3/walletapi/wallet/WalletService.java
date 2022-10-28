@@ -51,4 +51,11 @@ public class WalletService {
 
         return optionalWallet.get();
     }
+
+    public Wallet topUpBalance(Long amount) {
+        Wallet wallet = this.findByCustomer();
+        wallet.setBalance(wallet.getBalance() + amount);
+
+        return this.walletRepository.save(wallet);
+    }
 }

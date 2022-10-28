@@ -3,7 +3,9 @@ package com.dti.finalproject.group3.walletapi.wallet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,10 +26,24 @@ public class WalletController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedWallet);
     }
 
-    @GetMapping("/wallets")
-    public ResponseEntity<Wallet> getOne() {
+    @GetMapping("/wallets/{id}")
+    public ResponseEntity<Wallet> getOne(@PathVariable("id") Long id) {
         Wallet wallet = this.walletService.findByCustomer();
+        if (!id.equals(wallet.getId())) {
+            throw new IdNotMatchException();
+        }
 
         return ResponseEntity.ok().body(wallet);
+    }
+
+    @PutMapping("/wallets/{id}")
+    public ResponseEntity<Wallet> topUpBalance(@PathVariable("id") Long id, @RequestBody WalletRequestDTO walletRequestDTO) {
+        if (!id.equals(walletRequestDTO.getId())) {
+            throw new IdNotMatchException();
+        }
+
+        Wallet newWallet = walletRequestDTO.convertToEntity();
+        Wallet updatedWallet = this.walletService.topUpBalance(newWallet.getBalance());
+        return ResponseEntity.ok().body(updatedWallet);
     }
 }
