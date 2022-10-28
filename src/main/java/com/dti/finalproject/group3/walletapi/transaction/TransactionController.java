@@ -38,22 +38,23 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions")
-    public ResponseEntity<Page<TransactionResponseDTO>> getAll(@RequestParam(value = "minAmount", defaultValue = "0", required = false) Long minAmount,
+    public ResponseEntity<Page<TransactionResponseDTO>> getAll(@RequestParam(value = "transactionType", defaultValue = "out") String transactionType,
+                                                    @RequestParam(value = "minAmount", defaultValue = "0", required = false) Long minAmount,
                                                     @RequestParam(value = "maxAmount", defaultValue = "999999999999", required = false) Long maxAmount,
                                                     @RequestParam(value = "fromDate", defaultValue = "01-01-0001", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fromDate,
                                                     @RequestParam(value = "toDate", defaultValue = "31-12-9999", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate toDate,
                                                     @RequestParam(value = "sortBy", defaultValue = "created_at") String sortBy,
-                                                    @RequestParam(value = "orderBy", defaultValue = "desc") String orderBy,
+                                                    @RequestParam(value = "orderBy", defaultValue = "asc") String orderBy,
                                                     @RequestParam(value = "page", defaultValue = "0") int page,
                                                     @RequestParam(value = "size", defaultValue = "5") int size) {
         Sort sort = Sort.by(sortBy);
-        if (orderBy.equals("asc")) {
-            sort = Sort.by(Direction.ASC, sortBy);
+        if (orderBy.equals("desc")) {
+            sort = Sort.by(Direction.DESC, sortBy);
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        Page<Transaction> transactions = this.transactionService.getAllTransactionFromCustomer(minAmount, maxAmount, fromDate, toDate, pageable);
+        Page<Transaction> transactions = this.transactionService.getAllTransactionFromCustomer(transactionType, minAmount, maxAmount, fromDate, toDate, pageable);
         List<TransactionResponseDTO> transactionResponseDTOs = new ArrayList<>();
         for (Transaction transaction : transactions) {
             TransactionResponseDTO transactionResponseDTO = transaction.convertToDTO();

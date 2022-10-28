@@ -36,12 +36,15 @@ public class TransactionService {
         return this.transactionRepository.save(newTransaction);
     }
 
-    public Page<Transaction> getAllTransactionFromCustomer(Long minAmount, Long maxAmount, LocalDate fromDate, LocalDate toDate, Pageable pageable) {
+    public Page<Transaction> getAllTransactionFromCustomer(String transactionType, Long minAmount, Long maxAmount, LocalDate fromDate, LocalDate toDate, Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Long customerId = userPrincipal.getCustomer().getId();
         
-        return this.transactionRepository.findByAmountOrDate(customerId, minAmount, maxAmount, fromDate, toDate, pageable);
+        if (transactionType.equalsIgnoreCase("in")) {
+            return this.transactionRepository.findByTransactionTypeInAndAmountOrDate(customerId, minAmount, maxAmount, fromDate, toDate, pageable);    
+        }
+
+        return this.transactionRepository.findByTransactionTypeOutAndAmountOrDate(customerId, minAmount, maxAmount, fromDate, toDate, pageable);
     }
-    
 }
