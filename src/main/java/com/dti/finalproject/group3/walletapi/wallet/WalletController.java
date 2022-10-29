@@ -1,10 +1,9 @@
 package com.dti.finalproject.group3.walletapi.wallet;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,17 +13,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @SecurityRequirement(name = "Bearer Authentication")
 public class WalletController {
     private final WalletService walletService;
-
-    @PostMapping("/wallets")
-    public ResponseEntity<Wallet> createOne(@RequestBody WalletRequestDTO walletRequestDTO) {
-        Wallet newWallet = walletRequestDTO.convertToEntity();
-        Wallet savedWallet = this.walletService.create(newWallet);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedWallet);
-    }
 
     @GetMapping("/wallets/{id}")
     public ResponseEntity<Wallet> getOne(@PathVariable("id") Long id) {

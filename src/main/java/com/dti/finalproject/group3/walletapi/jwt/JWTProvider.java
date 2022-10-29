@@ -47,6 +47,8 @@ public class JWTProvider {
         Map<String, Object> userInformation = new HashMap<>();
         userInformation.put("userId", userPrincipal.getId());
         userInformation.put("username", userPrincipal.getUsername());
+        userInformation.put("customerId", userPrincipal.getCustomer().getId());
+        userInformation.put("walletId", userPrincipal.getCustomer().getWallet().getId());
 
         return Jwts.builder()
                 .setClaims(userInformation)

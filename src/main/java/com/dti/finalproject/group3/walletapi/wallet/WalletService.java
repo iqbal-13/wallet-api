@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.dti.finalproject.group3.walletapi.applicationuser.UserPrincipal;
-import com.dti.finalproject.group3.walletapi.customer.Customer;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,15 +16,6 @@ public class WalletService {
     private final WalletRepository walletRepository;
 
     public Wallet create(Wallet newWallet) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        Customer customer = userPrincipal.getCustomer();
-        newWallet.setCustomer(customer);
-        Optional<Wallet> wallet = this.walletRepository.findByCustomer(customer);
-        if (!wallet.isEmpty()) {
-            throw new WalletAlreadyExistsException();
-        }
-
         if (newWallet.getBalance() < 100000) {
             throw new MinBalanceIs100000Exception();
         }
