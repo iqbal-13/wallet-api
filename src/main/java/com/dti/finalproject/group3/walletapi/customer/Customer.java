@@ -44,7 +44,7 @@ public class Customer {
     @Size(min = 16, max = 17)
     private Long nik;
 
-    @NotBlank(message = "NIK is required")
+    @NotBlank(message = "Date of Birth is required")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
 
