@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUser;
 import com.dti.finalproject.group3.walletapi.wallet.Wallet;
@@ -34,11 +36,15 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Column(unique = true)
+    @NotBlank(message = "NIK is required")
+    @Size(min = 16, max = 17)
     private Long nik;
 
+    @NotBlank(message = "NIK is required")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
 
