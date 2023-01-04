@@ -3,6 +3,9 @@ package com.dti.finalproject.group3.walletapi.customer;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.dti.finalproject.group3.walletapi.model.Customer;
+import com.dti.finalproject.group3.walletapi.repository.CustomerRepository;
+import com.dti.finalproject.group3.walletapi.service.CustomerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,9 +14,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUser;
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUserService;
-import com.dti.finalproject.group3.walletapi.wallet.IdNotMatchException;
+import com.dti.finalproject.group3.walletapi.model.ApplicationUser;
+import com.dti.finalproject.group3.walletapi.service.ApplicationUserService;
+import com.dti.finalproject.group3.walletapi.controller.IdNotMatchException;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceTest {

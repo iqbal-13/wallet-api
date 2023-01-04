@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.dti.finalproject.group3.walletapi.applicationuser.UserPrincipal;
+import com.dti.finalproject.group3.walletapi.security.UserPrincipal;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

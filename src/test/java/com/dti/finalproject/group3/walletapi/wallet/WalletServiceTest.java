@@ -3,6 +3,10 @@ package com.dti.finalproject.group3.walletapi.wallet;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.dti.finalproject.group3.walletapi.model.Wallet;
+import com.dti.finalproject.group3.walletapi.repository.WalletRepository;
+import com.dti.finalproject.group3.walletapi.service.MinBalanceIs100000Exception;
+import com.dti.finalproject.group3.walletapi.service.WalletService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUser;
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUserService;
-import com.dti.finalproject.group3.walletapi.applicationuser.UserPrincipal;
-import com.dti.finalproject.group3.walletapi.customer.Customer;
+import com.dti.finalproject.group3.walletapi.model.ApplicationUser;
+import com.dti.finalproject.group3.walletapi.service.ApplicationUserService;
+import com.dti.finalproject.group3.walletapi.security.UserPrincipal;
+import com.dti.finalproject.group3.walletapi.model.Customer;
 
 @ExtendWith(MockitoExtension.class)
 public class WalletServiceTest {

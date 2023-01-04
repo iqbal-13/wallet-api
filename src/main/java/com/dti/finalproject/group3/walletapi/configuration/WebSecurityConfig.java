@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUserService;
+import com.dti.finalproject.group3.walletapi.service.ApplicationUserService;
 import com.dti.finalproject.group3.walletapi.jwt.JWTAuthenticationEntryPoint;
 import com.dti.finalproject.group3.walletapi.jwt.JWTRequestFilter;
 

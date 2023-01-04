@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dti.finalproject.group3.walletapi.applicationuser.ApplicationUserService;
+import com.dti.finalproject.group3.walletapi.service.ApplicationUserService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
