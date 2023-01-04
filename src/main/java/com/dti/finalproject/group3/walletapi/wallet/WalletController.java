@@ -18,10 +18,10 @@ import lombok.RequiredArgsConstructor;
 public class WalletController {
     private final WalletService walletService;
 
-    @GetMapping("/wallets/{id}")
+    @GetMapping("/customers/{id}/wallets")
     public ResponseEntity<Wallet> getOne(@PathVariable("id") Long id) {
         Wallet wallet = this.walletService.findByCustomer();
-        if (!id.equals(wallet.getId())) {
+        if (!id.equals(wallet.getCustomer().getId())) {
             throw new IdNotMatchException();
         }
 
